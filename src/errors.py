@@ -9,3 +9,6 @@ class TrigramError(Exception):
 
 class ValidationError(Exception):
     pass
+
+class SchemaError(Exception):
+    pass

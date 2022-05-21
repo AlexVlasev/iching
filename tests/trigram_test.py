@@ -1,6 +1,6 @@
 import pytest
 
-from src.errors import CoinTossError, TrigramError
+from src.errors import CoinTossError, TrigramError, SchemaError
 from src.trigram import Trigram
 
 def getFaultyTosses():
@@ -28,8 +28,8 @@ def getFaultySchemas():
 @pytest.mark.parametrize("schema", getFaultySchemas())
 def testInvalidSchema(schema):
     trigram = Trigram([(0, 3), (0, 3), (0, 3)])
-    trigram.present_schema = schema
-    with pytest.raises(TrigramError):
+    trigram.schemas['present'] = schema
+    with pytest.raises(SchemaError):
         trigram.validate()
 
 def testHappyPath():
