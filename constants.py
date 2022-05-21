@@ -34,6 +34,7 @@ COIN_TOSS_TO_FUTURE_INDEX = {
     (0, 3): 1,
 }
 
+# TODO: Convert to binary representation so these can be validated.
 LINE_INDICES_TO_TRIGRAM_INDEX = {
     (1, 1, 1): 1,
     (0, 0, 1): 2,
@@ -45,6 +46,9 @@ LINE_INDICES_TO_TRIGRAM_INDEX = {
     (0, 1, 1): 8,
 }
 
+# TODO: Convert to binary representation so these can be validated.
+# TODO: Add a map from binary representation to actual hexagram indices.
+# TODO: Add names so that other websites can be consulted.
 TRIGRAM_INDICES_TO_HEXAGRAM_INDEX = {
     (1, 1): 1,
     (1, 2): 34,

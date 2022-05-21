@@ -9,7 +9,7 @@ from helpers import validateCodeConfiguration
 from hexagram import Hexagram
 from trigram import Trigram
 
-
+# TODO: Use the altered algorithm for coin tosses using 4 coins or different throw schemes
 def getCoinTossesForHexagram():
     coins = [Coin() for _ in range(3)]
 

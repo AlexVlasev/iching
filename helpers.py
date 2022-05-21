@@ -3,7 +3,8 @@ from constants import (
     TRIGRAM_INDICES_TO_HEXAGRAM_INDEX,
 )
 
-
+# TODO: Add validation for trigram indices
+# TODO: Add validation for hexagram indices made out of trigrams
 def validateCodeConfiguration():
     values = list(TRIGRAM_INDICES_TO_HEXAGRAM_INDEX.values())
     assert min(values) == 1
