@@ -1,39 +1,62 @@
-from errors import TossException
-from constants import F_LINE_MAP, F_MAP, P_LINE_MAP, P_MAP, TRIGRAMS
+from constants import (
+    COIN_TOSS_TO_FUTURE_INDEX,
+    COIN_TOSS_TO_FUTURE_SCHEMA,
+    COIN_TOSS_TO_PRESENT_INDEX,
+    COIN_TOSS_TO_PRESENT_SCHEMA,
+    LINE_INDICES_TO_TRIGRAM_INDEX,
+    NUMBER_OF_COINS,
+    NUMBER_OF_TRIGRAMS,
+    TRIGRAM_LENGTH,
+)
+from errors import CoinTossError, TrigramError
 
 
 class Trigram:
-    def __init__(self, tosses: list):
-        self.tosses = None
+    def __init__(self, coin_tosses: list):
+        self.coin_tosses = None
+
         self.present_schema = None
         self.present_index = None
+
         self.future_schema = None
         self.future_index = None
 
-        self.__validate(tosses)
-        self.__prepare(tosses)
+        self.__validateCoinTosses(coin_tosses)
+        self.__prepare(coin_tosses)
+        self.__validate()
 
-    def __validate(self, tosses: list):
-        for toss in tosses:
+    def __validateCoinTosses(self, coin_tosses: list):
+        for toss in coin_tosses:
             heads, tails = toss
-            self.__validateTossPart(heads)
-            self.__validateTossPart(tails)
-            if heads + tails != 3:
-                raise TossException(f'The total number of throws must equal 3. Got {heads + tails} instead.')
+            self.__validateCoinTossPart(heads, 'heads')
+            self.__validateCoinTossPart(tails, 'tails')
+            if heads + tails != NUMBER_OF_COINS:
+                raise CoinTossError(f'The total number of throws must equal {NUMBER_OF_COINS}. Got {heads + tails} instead.')
 
-    def __validateTossPart(self, toss_part: tuple):
-        if type(toss_part) != int:
-            raise TossException('The toss part needs to be an integer.')
-        if toss_part < 0 or toss_part > 3:
-            raise TossException('The toss must be between 0 and 3 included.')
+    def __validateCoinTossPart(self, coin_toss_part: tuple, toss_type):
+        if type(coin_toss_part) != int:
+            raise CoinTossError(f'The number of {toss_type} needs to be an integer.')
+        if coin_toss_part < 0 or coin_toss_part > NUMBER_OF_COINS:
+            raise CoinTossError(f'The number of {toss_type} must be between 0 and {NUMBER_OF_COINS} included.')
 
-    def __prepare(self, tosses: list):
-        self.tosses = tosses
+    def __prepare(self, coin_tosses: list):
+        self.coin_tosses = coin_tosses
 
-        self.present_schema = '\n'.join((P_MAP[toss] for toss in self.tosses))
-        present_line_index = tuple((P_LINE_MAP[toss] for toss in self.tosses))
-        self.present_index = TRIGRAMS[present_line_index]
+        self.present_schema = '\n'.join((COIN_TOSS_TO_PRESENT_SCHEMA[toss] for toss in self.coin_tosses))
+        present_line_index = tuple((COIN_TOSS_TO_PRESENT_INDEX[toss] for toss in self.coin_tosses))
+        self.present_index = LINE_INDICES_TO_TRIGRAM_INDEX[present_line_index]
 
-        self.future_schema = '\n'.join((F_MAP[toss] for toss in self.tosses))
-        future_line_index = tuple((F_LINE_MAP[toss] for toss in self.tosses))
-        self.future_index = TRIGRAMS[future_line_index]
+        self.future_schema = '\n'.join((COIN_TOSS_TO_FUTURE_SCHEMA[toss] for toss in self.coin_tosses))
+        future_line_index = tuple((COIN_TOSS_TO_FUTURE_INDEX[toss] for toss in self.coin_tosses))
+        self.future_index = LINE_INDICES_TO_TRIGRAM_INDEX[future_line_index]
+    
+    def __validate(self):
+        if self.present_schema.count('\n') != TRIGRAM_LENGTH - 1:
+            raise TrigramError('The Trigram present schema is incorrect. Try building the Trigram again.')
+        if not 1 <= self.present_index <= NUMBER_OF_TRIGRAMS:
+            raise TrigramError(f'The Trigram has incorrect index {self.present_index}.')
+
+        if self.future_schema.count('\n') != TRIGRAM_LENGTH - 1:
+            raise TrigramError('The Trigram present schema is incorrect. Try building the Trigram again.')
+        if not 1 <= self.future_index <= NUMBER_OF_TRIGRAMS:
+            raise TrigramError(f'The Trigram has incorrect index {self.future_index}.')

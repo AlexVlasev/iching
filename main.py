@@ -1,12 +1,16 @@
 from random import randint
 
 from coin import Coin
-from constants import HEXAGRAMS, P_MAP
-from helpers import validateConfig
+from constants import (
+    COIN_TOSS_TO_PRESENT_SCHEMA,
+    TRIGRAM_INDICES_TO_HEXAGRAM_INDEX,
+)
+from helpers import validateCodeConfiguration
 from hexagram import Hexagram
 from trigram import Trigram
 
-def getTossesForHexagram():
+
+def getCoinTossesForHexagram():
     coins = [Coin() for _ in range(3)]
 
     tosses = []
@@ -14,7 +18,7 @@ def getTossesForHexagram():
         input()
         print(f'Line {6 - i} ', end='')
         toss = tossCoins(coins)
-        print(P_MAP[toss])
+        print(COIN_TOSS_TO_PRESENT_SCHEMA[toss])
         tosses.append(toss)
     del coins
 
@@ -33,15 +37,19 @@ def tossCoins(coins: list[Coin]):
     return (heads, tails)
 
 def main():
-    validateConfig()
+    try:
+        validateCodeConfiguration()
+    except AssertionError:
+        print('There is a problem with the code configuration. Exiting...')
+        return
 
     input('Type your question here and press enter: ')
     print('\nNow cast 6 times by pressing enter:')
     
-    lower_tosses, upper_tosses = getTossesForHexagram()
-    lower = Trigram(lower_tosses)
-    upper = Trigram(upper_tosses)
-    hexagram = Hexagram(lower, upper)
+    lower_coin_tosses, upper_coin_tosses = getCoinTossesForHexagram()
+    lower_trigram = Trigram(lower_coin_tosses)
+    upper_trigram = Trigram(upper_coin_tosses)
+    hexagram = Hexagram(lower_trigram, upper_trigram)
 
     print(f'\nPresent Hexagram:\n\n{hexagram.present_schema}\n')
     print(f'Future Hexagram:\n\n{hexagram.future_schema}\n')

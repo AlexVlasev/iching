@@ -1,9 +1,13 @@
-from constants import HEXAGRAMS
+from constants import (
+    NUMBER_OF_HEXAGRAMS,
+    TRIGRAM_INDICES_TO_HEXAGRAM_INDEX,
+)
 
-def validateConfig():
-    values = list(HEXAGRAMS.values())
+
+def validateCodeConfiguration():
+    values = list(TRIGRAM_INDICES_TO_HEXAGRAM_INDEX.values())
     assert min(values) == 1
-    assert max(values) == 64
-    assert len(set(values)) == 64
+    assert max(values) == NUMBER_OF_HEXAGRAMS
+    assert len(set(values)) == NUMBER_OF_HEXAGRAMS
     assert type(values[0]) is int
     assert len(set(type(v) for v in values)) == 1

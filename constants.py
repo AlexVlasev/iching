@@ -1,32 +1,40 @@
-P_MAP = {
+NUMBER_OF_COINS = 3
+
+TRIGRAM_LENGTH = 3
+NUMBER_OF_TRIGRAMS = 8
+
+HEXAGRAM_LENGTH = 6
+NUMBER_OF_HEXAGRAMS = 64
+
+COIN_TOSS_TO_PRESENT_SCHEMA = {
     (3, 0): '-o-',
     (2, 1): '- -',
     (1, 2): '---',
     (0, 3): '-x-',
 }
 
-F_MAP = {
+COIN_TOSS_TO_FUTURE_SCHEMA = {
     (3, 0): '- -',
     (2, 1): '- -',
     (1, 2): '---',
     (0, 3): '---',
 }
 
-P_LINE_MAP = {
+COIN_TOSS_TO_PRESENT_INDEX = {
     (3, 0): 1,
     (2, 1): 0,
     (1, 2): 1,
     (0, 3): 0,
 }
 
-F_LINE_MAP = {
+COIN_TOSS_TO_FUTURE_INDEX = {
     (3, 0): 0,
     (2, 1): 0,
     (1, 2): 1,
     (0, 3): 1,
 }
 
-TRIGRAMS = {
+LINE_INDICES_TO_TRIGRAM_INDEX = {
     (1, 1, 1): 1,
     (0, 0, 1): 2,
     (0, 1, 0): 3,
@@ -37,7 +45,7 @@ TRIGRAMS = {
     (0, 1, 1): 8,
 }
 
-HEXAGRAMS = {
+TRIGRAM_INDICES_TO_HEXAGRAM_INDEX = {
     (1, 1): 1,
     (1, 2): 34,
     (1, 3): 5,
