@@ -24,7 +24,8 @@ class Coin:
         self.__validate()
 
     def __validate(self):
-        if self.value is not None and type(self.value) is not int and self.value not in [0, 1]:
+        print(self.value, type(self.value))
+        if not self.__valueIsValid():
             raise CoinTossError(f'Coin has incorrect value {self.value}. Only 0 or 1 are allowed.')
         if type(self.tossed) is not bool:
             raise CoinTossError(f'Coin has incorrect toss status {self.tossed}. Only False and True are allowed.')
@@ -33,7 +34,15 @@ class Coin:
             raise CoinTossError('Coin has no value, but appears to have been tossed.')
         if self.value and not self.tossed:
             raise CoinTossError(f'Coin has value {self.value}, but it has not been tossed.')
-    
+
+    def __valueIsValid(self):
+        if self.value is None:
+            return True
+        if type(self.value) is int:
+            if self.value in [0, 1]:
+                return True
+        return False
+
     def toss(self):
         self.__validate()
         if self.value or self.tossed:
