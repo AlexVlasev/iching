@@ -1,4 +1,4 @@
-from constants import (
+from .constants import (
     NUMBER_OF_HEXAGRAMS,
     TRIGRAM_INDICES_TO_HEXAGRAM_INDEX,
 )

@@ -1,7 +1,7 @@
 import pytest
 
-from coin import Coin
-from errors import CoinTossError
+from src.coin import Coin
+from src.errors import CoinTossError
 
 def invalidCoinStates():
     return [

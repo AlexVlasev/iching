@@ -1,4 +1,4 @@
-from constants import (
+from .constants import (
     HEXAGRAM_LENGTH,
     NUMBER_OF_COINS,
     NUMBER_OF_HEXAGRAMS,
@@ -6,12 +6,12 @@ from constants import (
     TRIGRAM_INDICES_TO_HEXAGRAM_INDEX,
     TRIGRAM_LENGTH,
 )
-from errors import (
+from .errors import (
     CoinTossError,
     HexagramError,
     TrigramError,
 )
-from trigram import Trigram
+from .trigram import Trigram
 
 
 class Hexagram:

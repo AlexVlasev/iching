@@ -1,6 +1,6 @@
 from random import randint
 
-from errors import CoinTossError
+from .errors import CoinTossError
 
 
 class Coin:
@@ -24,7 +24,6 @@ class Coin:
         self.__validate()
 
     def __validate(self):
-        print(self.value, type(self.value))
         if not self.__valueIsValid():
             raise CoinTossError(f'Coin has incorrect value {self.value}. Only 0 or 1 are allowed.')
         if type(self.tossed) is not bool:

@@ -1,7 +1,7 @@
 import pytest
 
-from errors import CoinTossError, HexagramError
-from hexagram import Trigram, Hexagram
+from src.errors import CoinTossError, HexagramError
+from src.hexagram import Trigram, Hexagram
 
 def getFaultyTosses():
     return [

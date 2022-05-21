@@ -1,13 +1,13 @@
 from random import randint
 
-from coin import Coin
-from constants import (
+from src.coin import Coin
+from src.constants import (
     COIN_TOSS_TO_PRESENT_SCHEMA,
     TRIGRAM_INDICES_TO_HEXAGRAM_INDEX,
 )
-from helpers import validateCodeConfiguration
-from hexagram import Hexagram
-from trigram import Trigram
+from src.helpers import validateCodeConfiguration
+from src.hexagram import Hexagram
+from src.trigram import Trigram
 
 # TODO: Use the altered algorithm for coin tosses using 4 coins or different throw schemes
 def getCoinTossesForHexagram():

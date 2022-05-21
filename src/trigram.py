@@ -1,4 +1,4 @@
-from constants import (
+from .constants import (
     COIN_TOSS_TO_FUTURE_INDEX,
     COIN_TOSS_TO_FUTURE_SCHEMA,
     COIN_TOSS_TO_PRESENT_INDEX,
@@ -8,7 +8,7 @@ from constants import (
     NUMBER_OF_TRIGRAMS,
     TRIGRAM_LENGTH,
 )
-from errors import CoinTossError, TrigramError
+from .errors import CoinTossError, TrigramError
 
 
 class Trigram:

@@ -1,7 +1,7 @@
 import pytest
 
-from errors import CoinTossError, TrigramError
-from trigram import Trigram
+from src.errors import CoinTossError, TrigramError
+from src.trigram import Trigram
 
 def getFaultyTosses():
     return [
