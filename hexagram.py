@@ -1,16 +1,21 @@
 from constants import (
     HEXAGRAM_LENGTH,
+    NUMBER_OF_COINS,
     NUMBER_OF_HEXAGRAMS,
     NUMBER_OF_TRIGRAMS,
     TRIGRAM_INDICES_TO_HEXAGRAM_INDEX,
     TRIGRAM_LENGTH,
 )
-from errors import TrigramError, HexagramError
+from errors import (
+    CoinTossError,
+    HexagramError,
+    TrigramError,
+)
 from trigram import Trigram
 
 
 class Hexagram:
-    def __init__(self, lower: Trigram, upper: Trigram):
+    def __init__(self, lower_trigram: Trigram, upper_trigram: Trigram):
         self.lower = None
         self.upper = None
 
@@ -22,37 +27,53 @@ class Hexagram:
         self.future_index = None
         self.future_url = None
 
-        self.__validateTrigram(lower)
-        self.__validateTrigram(upper)
+        self.__validateTrigram(lower_trigram)
+        self.__validateTrigram(upper_trigram)
 
-        self.__prepare(lower, upper)
+        self.__prepare(lower_trigram, upper_trigram)
         self.__validate()
 
     def __validateTrigram(self, trigram: Trigram):
-        self.__validateTosses(trigram.coin_tosses)
-        
-        self.__validateSchema(trigram.present_schema)
-        self.__validateIndex(trigram.present_index)
+        if not isinstance(trigram, Trigram):
+            raise TrigramError('Invalid Trigram object provided to Hexagram.')
 
-        self.__validateSchema(trigram.future_schema)
-        self.__validateIndex(trigram.future_index)
+        self.__validateCoinTosses(trigram.coin_tosses)
+        
+        self.__validateTrigramSchema(trigram.present_schema)
+        self.__validateTrigramIndex(trigram.present_index)
+
+        self.__validateTrigramSchema(trigram.future_schema)
+        self.__validateTrigramIndex(trigram.future_index)
     
-    def __validateTosses(self, coin_tosses):
+    def __validateCoinTosses(self, coin_tosses):
         if type(coin_tosses) != list:
             raise TrigramError('The Trigram has coin tosses that are not a list.')
 
         if len(coin_tosses) != TRIGRAM_LENGTH:
             raise TrigramError(f'The Trigram does not have {TRIGRAM_LENGTH} coin tosses.')
-    
-    def __validateSchema(self, schema):
+
+        for toss in coin_tosses:
+            heads, tails = toss
+            self.__validateCoinTossPart(heads, 'heads')
+            self.__validateCoinTossPart(tails, 'tails')
+            if heads + tails != NUMBER_OF_COINS:
+                raise CoinTossError(f'The total number of throws must equal {NUMBER_OF_COINS}. Got {heads + tails} instead.')
+
+    def __validateCoinTossPart(self, coin_toss_part: tuple, toss_type):
+        if type(coin_toss_part) != int:
+            raise CoinTossError(f'The number of {toss_type} needs to be an integer.')
+        if not 0 <= coin_toss_part <= NUMBER_OF_COINS:
+            raise CoinTossError(f'The number of {toss_type} must be between 0 and {NUMBER_OF_COINS} included.')
+
+    def __validateTrigramSchema(self, schema):
         if type(schema) != str:
             raise TrigramError(f'The Trigram has incorrect format {repr(schema)}.') 
 
-    def __validateIndex(self, index):
+    def __validateTrigramIndex(self, index):
         if type(index) != int:
             raise TrigramError(f'The Trigram index {index} is of type {type(index)}. It must be an integer instead.')
 
-        if index < 1 or index > NUMBER_OF_TRIGRAMS:
+        if not 1 <= index <= NUMBER_OF_TRIGRAMS:
             raise TrigramError(f'The Trigram index {index} is incorrect. It must be between 1 and {NUMBER_OF_TRIGRAMS} included.')
 
     def __prepare(self, lower: Trigram, upper: Trigram):

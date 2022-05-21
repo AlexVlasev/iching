@@ -26,6 +26,12 @@ class Trigram:
         self.__validate()
 
     def __validateCoinTosses(self, coin_tosses: list):
+        if type(coin_tosses) != list:
+            raise TrigramError('The Trigram has coin tosses that are not a list.')
+
+        if len(coin_tosses) != TRIGRAM_LENGTH:
+            raise TrigramError(f'The Trigram does not have {TRIGRAM_LENGTH} coin tosses.')
+
         for toss in coin_tosses:
             heads, tails = toss
             self.__validateCoinTossPart(heads, 'heads')
@@ -36,7 +42,7 @@ class Trigram:
     def __validateCoinTossPart(self, coin_toss_part: tuple, toss_type):
         if type(coin_toss_part) != int:
             raise CoinTossError(f'The number of {toss_type} needs to be an integer.')
-        if coin_toss_part < 0 or coin_toss_part > NUMBER_OF_COINS:
+        if not 0 <= coin_toss_part <= NUMBER_OF_COINS:
             raise CoinTossError(f'The number of {toss_type} must be between 0 and {NUMBER_OF_COINS} included.')
 
     def __prepare(self, coin_tosses: list):
