@@ -51,12 +51,14 @@ def main():
     upper_trigram = Trigram(upper_coin_tosses)
     hexagram = Hexagram(lower_trigram, upper_trigram)
 
-    print(f'\nPresent Hexagram:\n\n{hexagram.present_schema}\n')
-    print(f'Future Hexagram:\n\n{hexagram.future_schema}\n')
+    present_schema = hexagram.schemas['present']
+    future_schema = hexagram.schemas['future']
+    print(f'\nPresent Hexagram:\n\n{present_schema.schema}\n')
+    print(f'Future Hexagram:\n\n{future_schema.schema}\n')
 
     print(f'To read more, visit the following URLs:')
-    print(f'\nPresent: {hexagram.present_url}')
-    print(f'Future:  {hexagram.future_url}\n')
+    print(f'\nPresent: {present_schema.url}')
+    print(f'Future:  {future_schema.url}\n')
 
 if __name__ == '__main__':
     main()

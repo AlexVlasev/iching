@@ -8,7 +8,6 @@ class HexagramSchema:
         self,
         lower_trigram: Trigram,
         upper_trigram: Trigram,
-        index: int,
         schema_type: str,
         validate_trigrams: bool
     ):

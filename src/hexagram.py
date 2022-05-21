@@ -49,8 +49,8 @@ class Hexagram:
             TrigramSchemaValidator(schema.schema, schema.index, schema.schema_type)
 
     def __prepare(self, lower_trigram: Trigram, upper_trigram: Trigram) -> None:
-        self.schemas['present'] = HexagramSchema(lower_trigram, upper_trigram, index, 'present', False)
-        self.schemas['future'] = HexagramSchema(lower_trigram, upper_trigram, index, 'present', False)
+        self.schemas['present'] = HexagramSchema(lower_trigram, upper_trigram, 'present', False)
+        self.schemas['future'] = HexagramSchema(lower_trigram, upper_trigram, 'future', False)
     
     def validate(self) -> None:
         self.__validate()
