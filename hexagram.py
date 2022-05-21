@@ -15,6 +15,15 @@ from trigram import Trigram
 
 
 class Hexagram:
+    """
+    The Hexagram class provides a simple API to convert two Trigrams
+    into a Hexagram. There are a number of checks and validations along the way.
+
+    Once the Trigrams are validated, a Hexagram is constructed. Then a user
+    can obtain its schema and/or index directly.
+
+    TODO: create getters for the schema and for the index.
+    """
     def __init__(self, lower_trigram: Trigram, upper_trigram: Trigram):
         self.lower = None
         self.upper = None

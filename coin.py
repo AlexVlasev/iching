@@ -4,6 +4,17 @@ from errors import CoinTossError
 
 
 class Coin:
+    """
+    The Coin class provides an API for obtaining a random value with a number
+    of checks and validations along the way.
+    
+    The usage is strict. Once a Coin is instantiated, the user has to toss it
+    before obtaining its value. Once a value is obtained, the coin can
+    be tossed once again. An action (toss, getValue) cannot be performed
+    twice in a row.
+
+    The validation is there to assure there is no tampering with the Coin.
+    """
     def __init__(self):
         self.__resetCoin()
     
