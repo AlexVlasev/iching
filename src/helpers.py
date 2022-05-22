@@ -5,10 +5,10 @@ from .constants import (
 
 # TODO: Add validation for trigram indices
 # TODO: Add validation for hexagram indices made out of trigrams
-def validateCodeConfiguration():
+def validate_code_configuration():
     values = list(TRIGRAM_INDICES_TO_HEXAGRAM_INDEX.values())
     assert min(values) == 1
     assert max(values) == NUMBER_OF_HEXAGRAMS
     assert len(set(values)) == NUMBER_OF_HEXAGRAMS
-    assert type(values[0]) is int
+    assert isinstance(values[0], int)
     assert len(set(type(v) for v in values)) == 1

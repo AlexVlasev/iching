@@ -1,17 +1,8 @@
-from .constants import (
-    COIN_TOSS_TO_FUTURE_INDEX,
-    COIN_TOSS_TO_FUTURE_SCHEMA,
-    COIN_TOSS_TO_PRESENT_INDEX,
-    COIN_TOSS_TO_PRESENT_SCHEMA,
-    LINE_INDICES_TO_TRIGRAM_INDEX,
-    NUMBER_OF_COINS,
-    NUMBER_OF_TRIGRAMS,
-    TRIGRAM_LENGTH,
-)
-from .errors import CoinTossError, TrigramError
 from schemas.trigram_schema import TrigramSchema
 from validators.coin_tosses import CoinTossesValidator
 from validators.trigram_schema import TrigramSchemaValidator
+
+from .errors import TrigramError
 
 
 class Trigram:
@@ -37,10 +28,13 @@ class Trigram:
         self.coin_tosses = coin_tosses
         self.schemas['present'] = TrigramSchema(coin_tosses, 'present', False)
         self.schemas['future'] = TrigramSchema(coin_tosses, 'future', False)
-    
+
     def validate(self) -> None:
+        """
+        You can use the internal validation logic yourself.
+        """
         self.__validate()
-    
+
     def __validate(self) -> None:
         if len(self.schemas) != 2:
             raise TrigramError('The number of schemas is incorrect')

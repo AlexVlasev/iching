@@ -1,9 +1,10 @@
 import pytest
 
-from src.errors import CoinTossError, TrigramError, SchemaError
+from src.errors import CoinTossError, SchemaError
 from src.trigram import Trigram
 
-def getFaultyTosses():
+
+def get_faulty_tosses():
     return [
         'abc',
         [],
@@ -12,12 +13,12 @@ def getFaultyTosses():
         [('a', 3), (0, 3), (0, 3)],
     ]
 
-@pytest.mark.parametrize("coin_tosses", getFaultyTosses())
-def testInvalidCoinTosses(coin_tosses):
+@pytest.mark.parametrize("coin_tosses", get_faulty_tosses())
+def test_invalid_coin_tosses(coin_tosses):
     with pytest.raises(CoinTossError):
-        trigram = Trigram(coin_tosses)
+        Trigram(coin_tosses)
 
-def getFaultySchemas():
+def get_faulty_schemas():
     return [
         None,
         1,
@@ -25,13 +26,13 @@ def getFaultySchemas():
         'a\nb',
     ]
 
-@pytest.mark.parametrize("schema", getFaultySchemas())
-def testInvalidSchema(schema):
+@pytest.mark.parametrize("schema", get_faulty_schemas())
+def test_invalid_schema(schema):
     trigram = Trigram([(0, 3), (0, 3), (0, 3)])
     trigram.schemas['present'] = schema
     with pytest.raises(SchemaError):
         trigram.validate()
 
-def testHappyPath():
+def test_happy_path():
     coin_tosses = [(0, 3), (1, 2), (2, 1)]
-    trigram = Trigram(coin_tosses)
+    Trigram(coin_tosses)

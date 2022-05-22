@@ -1,21 +1,10 @@
-from .constants import (
-    HEXAGRAM_LENGTH,
-    NUMBER_OF_COINS,
-    NUMBER_OF_HEXAGRAMS,
-    NUMBER_OF_TRIGRAMS,
-    TRIGRAM_INDICES_TO_HEXAGRAM_INDEX,
-    TRIGRAM_LENGTH,
-)
-from .errors import (
-    CoinTossError,
-    HexagramError,
-    TrigramError,
-)
 from schemas.hexagram_schema import HexagramSchema
-from .trigram import Trigram
 from validators.coin_tosses import CoinTossesValidator
 from validators.hexagram_schema import HexagramSchemaValidator
 from validators.trigram_schema import TrigramSchemaValidator
+
+from .errors import HexagramError, TrigramError
+from .trigram import Trigram
 
 
 class Hexagram:
@@ -34,13 +23,13 @@ class Hexagram:
 
         self.schemas = dict()
 
-        self.__validateTrigram(lower_trigram)
-        self.__validateTrigram(upper_trigram)
+        self.__validate_trigram(lower_trigram)
+        self.__validate_trigram(upper_trigram)
 
         self.__prepare(lower_trigram, upper_trigram)
         self.__validate()
 
-    def __validateTrigram(self, trigram: Trigram) -> None:
+    def __validate_trigram(self, trigram: Trigram) -> None:
         if not isinstance(trigram, Trigram):
             raise TrigramError('Invalid Trigram object provided to Hexagram.')
 
@@ -51,10 +40,13 @@ class Hexagram:
     def __prepare(self, lower_trigram: Trigram, upper_trigram: Trigram) -> None:
         self.schemas['present'] = HexagramSchema(lower_trigram, upper_trigram, 'present', False)
         self.schemas['future'] = HexagramSchema(lower_trigram, upper_trigram, 'future', False)
-    
+
     def validate(self) -> None:
+        """
+        Use the validation logic yourself.
+        """
         self.__validate()
-    
+
     def __validate(self) -> None:
         if len(self.schemas) != 2:
             raise HexagramError('The number of schemas is incorrect')

@@ -3,7 +3,7 @@ import pytest
 from src.coin import Coin
 from src.errors import CoinTossError
 
-def invalidCoinStates():
+def invalid_coin_states():
     return [
         (None, True),
         (None, 1),
@@ -13,36 +13,36 @@ def invalidCoinStates():
         (2, True),
     ]
 
-@pytest.mark.parametrize("value,tossed", invalidCoinStates())
-def testCannotToss(value, tossed):
+@pytest.mark.parametrize("value,tossed", invalid_coin_states())
+def test_cannot_toss(value, tossed):
     coin = Coin()
     coin.value = value
     coin.tossed = tossed
     with pytest.raises(CoinTossError):
         coin.toss()
 
-@pytest.mark.parametrize("value,tossed", invalidCoinStates())
-def testCannotGetValue(value, tossed):
+@pytest.mark.parametrize("value,tossed", invalid_coin_states())
+def test_cannot_get_value(value, tossed):
     coin = Coin()
     coin.value = value
     coin.tossed = tossed
     with pytest.raises(CoinTossError):
-        value = coin.getValue()
+        value = coin.get_value()
 
-def coinIsReset(coin):
+def coin_is_reset(coin):
     assert coin.value is None
     assert coin.tossed is False
 
-def coinIsTossed(coin):
+def coin_is_tossed(coin):
     assert coin.value is not None
     assert coin.tossed
 
-def testHappyPath():
+def test_happy_path():
     coin = Coin()
-    coinIsReset(coin)
+    coin_is_reset(coin)
 
     coin.toss()
-    coinIsTossed(coin)
+    coin_is_tossed(coin)
 
-    value = coin.getValue()
-    coinIsReset(coin)
+    coin.get_value()
+    coin_is_reset(coin)
